@@ -1,4 +1,6 @@
 import wollok.game.*
+import cultivos.*
+
 
 object personaje {
 	var property position = game.center()
@@ -18,12 +20,20 @@ object personaje {
 	}
 
 	method plantaMaiz() {
+		self.validarPosicionVacia()
 		game.addVisual(new Maiz( position = self.position()) )
 	}
 
 	method rega() {
-		const cultivosEnMiPosicion = game.colliders(self)
-		cultivosEnMiPosicion.forEach(cultivo => cultivo.regate() )
+		self.cultivosDeBajo().forEach({cultivo => cultivo.regate()} )
+	}
+	method cultivosDeBajo() { return game.colliders(self)
+	}
+
+	method validarPosicionVacia() {
+		if (not self.cultivosDeBajo().isEmpty()){
+			self.error("ya hay un cultivo aca")
+		}
 	}
 
 }
