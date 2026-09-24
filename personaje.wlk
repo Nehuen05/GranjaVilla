@@ -17,4 +17,13 @@ object personaje {
 		position = nuevaPosition //ahora si puedo modificar la posicion
 	}
 
+	method plantaMaiz() {
+		game.addVisual(new Maiz( position = self.position()) )
+	}
+
+	method rega() {
+		const cultivosEnMiPosicion = game.colliders(self)
+		cultivosEnMiPosicion.forEach(cultivo => cultivo.regate() )
+	}
+
 }
